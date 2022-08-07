@@ -1,21 +1,32 @@
 import { useState, FormEvent } from "react"
 import { useRouter } from 'next/router'
+import type { ProjectCreation } from "../lib/types"
 
-const ProjectAdd = () => {
+type Props = {
+    groupId:string
+}
+
+const ProjectAdd = ({groupId}:Props) => {
 
     const [projectName, setProjectName] = useState('')
+    const [projectDescription, setProjectDescription] = useState('')
     const router = useRouter()
 
     const saveProject = async () => {
+        const body:ProjectCreation = {
+            name: projectName,
+            description: projectDescription,
+            groupId
+        }
         const response = await fetch('/api/project', {
             method: 'POST',
-            body: JSON.stringify({ name: projectName }),
+            body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         if (response.status == 201) {
-            router.reload(window.location.pathname)
+            router.reload()
         }
     }
 
@@ -24,6 +35,9 @@ const ProjectAdd = () => {
             <p className="text-2xl pb-4">Add Project</p>
             <div className="py-2">
                 <input onChange={(e: FormEvent<HTMLInputElement>) => {setProjectName(e.currentTarget.value)}} type="text" placeholder="Project Name" className="input input-bordered w-full max-w-xs" />
+            </div>
+            <div className="py-2">
+                <input onChange={(e: FormEvent<HTMLInputElement>) => {setProjectDescription(e.currentTarget.value)}} type="text" placeholder="Description" className="input input-bordered w-full max-w-xs" />
             </div>
             <div className="flex w-full">
                 <button onClick={saveProject} className="btn btn-primary ml-auto">Save</button>

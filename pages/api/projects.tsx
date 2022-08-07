@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const url = 'http://localhost:8080/project'
+const url = 'http://localhost:8080/projects'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {

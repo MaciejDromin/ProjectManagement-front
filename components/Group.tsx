@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import Popup from "./Popup"
 import ProjectAdd from "./ProjectAdd"
 import ProjectShort from "./ProjectShort"
-import { GetServerSideProps } from 'next'
 
 type Project = {
     id: string,
@@ -12,10 +11,11 @@ type Project = {
 }
 
 type Props = {
-    name: string
+    id:string, 
+    name:string
 }
 
-const Group = ({name}: Props) => {
+const Group = ({id, name}: Props) => {
 
     const [projects, setProjects] = useState<Project[]>(null)
     const [isLoading, setLoading] = useState(false)
@@ -23,7 +23,7 @@ const Group = ({name}: Props) => {
     useEffect(() => {
         setLoading(true)
         // TODO: change to fetch only projects within Group
-        fetch('/api/project', {
+        fetch('/api/projects', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -32,7 +32,6 @@ const Group = ({name}: Props) => {
         }).then((res) => res.json())
         .then((data) => {
             setProjects(data)
-            console.log(data)
             setLoading(false)
         })
     }, [])
@@ -44,13 +43,12 @@ const Group = ({name}: Props) => {
                     {name}
                 </div>
                 <div className="divider sm:divider-horizontal"></div>
-                <Popup buttonName="Create Project" childComp={<ProjectAdd />} />
+                <Popup buttonName="Create Project" childComp={<ProjectAdd groupId={id}/>} />
             </div>
             <div>
-                <ProjectShort name="Project" status="In Progress" description="Hello!" id="dummy"/>
                 {!isLoading && projects !== null && <div>{projects.map(project => {
                     return (
-                        <ProjectShort name={project.name} status={project.status} description={project.description} id={project.id} />
+                        <ProjectShort key={project.id} name={project.name} status={project.status} description={project.description} id={project.id} />
                     )
                 })}</div>}
             </div>
