@@ -15,7 +15,7 @@ export default function Home() {
     setIsOpened(!isOpened)
   }
   return (
-    <div className='w-3/5 mx-auto pt-4 pb-8' data-theme="corporate">
+    <div data-theme="corporate">
       <PopupWithExitButton updateIsOpened={callback} buttonName='Add Group' childComp={<Tab isOpened={isOpened} tabs={
         [
           {name: "Group", component: <GroupAdd/>},
