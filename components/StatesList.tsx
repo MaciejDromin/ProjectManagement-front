@@ -1,4 +1,5 @@
 import Collapsable from "./Collapsable"
+import Heading from "./Heading"
 
 type Task = {
     name: string
@@ -32,7 +33,7 @@ const StatesList = ({ statesList }: Props) => {
                         {state.tasks.map(task => {
                             return (
                                 <div className="my-4">
-                                    <Collapsable contentName="Tasks" component={"<div>"+task.name+"</div>"}/>
+                                    <Collapsable contentName="Tasks" component={<Heading title="Test"/>}/>
                                 </div>
                             )
                         })}
