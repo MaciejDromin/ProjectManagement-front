@@ -6,6 +6,7 @@ import GroupAdd from '../components/GroupAdd'
 import PredefinedGroupStateAdd from '../components/PredefinedGroupStateAdd'
 import Tab from '../components/Tab'
 import TaskAdd from '../components/TaskAdd'
+import { useSession } from "next-auth/react"
 
 //TODO: Fetch groups
 
@@ -14,6 +15,8 @@ export default function Home() {
   const callback = () => {
     setIsOpened(!isOpened)
   }
+  const { data: session } = useSession()
+  console.log(session)
   return (
     <div data-theme="corporate">
       <PopupWithExitButton updateIsOpened={callback} buttonName='Add Group' childComp={<Tab isOpened={isOpened} tabs={
