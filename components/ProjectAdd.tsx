@@ -3,10 +3,12 @@ import { useRouter } from 'next/router'
 import type { ProjectCreation } from "../lib/types"
 
 type Props = {
-    groupId:string
+    groupId: number
 }
 
-const ProjectAdd = ({groupId}:Props) => {
+const ProjectAdd = (props:Props) => {
+
+    const {groupId} = props
 
     const [projectName, setProjectName] = useState('')
     const [projectDescription, setProjectDescription] = useState('')
@@ -18,20 +20,20 @@ const ProjectAdd = ({groupId}:Props) => {
             description: projectDescription,
             groupId
         }
-        const response = await fetch('/api/project', {
+        const response = await fetch('/api/projects', {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
+        }) 
         if (response.status == 201) {
             router.reload()
         }
     }
 
     return (
-        <div>
+        <div key={groupId}>
             <p className="text-2xl pb-4">Add Project</p>
             <div className="py-2">
                 <input onChange={(e: FormEvent<HTMLInputElement>) => {setProjectName(e.currentTarget.value)}} type="text" placeholder="Project Name" className="input input-bordered w-full max-w-xs" />

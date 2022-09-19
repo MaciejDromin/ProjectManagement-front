@@ -1,27 +1,22 @@
-import { useState, FormEvent } from "react"
+import { useState, useEffect, FormEvent } from "react"
 import type { PredefinedGroupStateCreation } from "../lib/types"
 
-type Props = {
-    groupId:string
+interface Props {
+    updateRequests: (endpoint: string, body: any) => void
 }
 
-const PredefinedGroupStateAdd = ({groupId}:Props) => {
+const PredefinedGroupStateAdd = (props:Props) => {
 
     const [predefinedGroupState, setPredefinedGroupState] = useState('')
-
-    const saveProject = async () => {
+    const { updateRequests } = props
+    useEffect(() => {
+        savePredefinedGroupState()
+    }, [predefinedGroupState])
+    const savePredefinedGroupState = () => {
         const body:PredefinedGroupStateCreation = {
-            name: predefinedGroupState,
-            groupId: groupId
+            name: predefinedGroupState
         }
-        //TODO: integrate with backend
-        const response = await fetch('/api/project', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        updateRequests('/predefinedgroupstates/groups/', body)
     }
 
     //TODO: Do validation on inputs

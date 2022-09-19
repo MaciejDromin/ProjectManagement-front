@@ -1,8 +1,16 @@
+import Link from "next/link"
+import { useSession, signOut } from "next-auth/react"
+
 const Navbar = () => {
+
+    const { data: session, status } = useSession()
+
     return (
         <div className="navbar bg-base-100">
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-xl">Project Management</a>
+                <Link href="/">
+                    <a className="btn btn-ghost normal-case text-xl">Project Management</a>
+                </Link>
             </div>
             <div className="flex-none gap-2">
                 <a className="btn btn-ghost normal-case text-xl">Projects</a>
@@ -19,7 +27,12 @@ const Navbar = () => {
                             </a>
                         </li>
                         <li><a>Settings</a></li>
-                        <li><a>Login</a></li>
+                        {status === "authenticated" ? (
+                                (<li onClick={() => signOut()}><a>Logout</a></li>)
+                            ) : (
+                                (<li><Link href="/login">Login</Link></li>)
+                            )
+                        }
                     </ul>
                 </div>
             </div>

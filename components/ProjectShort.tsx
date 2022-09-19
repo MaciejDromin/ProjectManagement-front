@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import Link from "next/link"
 
 type Props = {
     id: string,
@@ -12,7 +13,7 @@ const ProjectShort = ({id, name, status, description}: Props) => {
     const router = useRouter()
 
     const deleteProject = async () => {
-        const response = await fetch('/api/project?id='+id, {
+        const response = await fetch('/api/projects?id='+id, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -26,7 +27,7 @@ const ProjectShort = ({id, name, status, description}: Props) => {
     return (
         <div id={id} tabIndex="0" className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box mb-2">
             <div className="collapse-title text-xl font-medium">
-                {name} &nbsp;
+                <Link href={"/projects/"+id}>{name}</Link> &nbsp;
                 {status} &nbsp;
                 <div onClick={deleteProject} className="btn btn-error">
                     Delete

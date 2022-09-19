@@ -1,6 +1,6 @@
-import { getToken } from "next-auth/jwt"
 import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
+import { api } from "../../../lib/api"
 
 type User = {
     id: string,
@@ -20,27 +20,11 @@ const providers = [
         },
         authorize: async (credentials: any, req) => {
             try {
-                const res = await fetch('http://localhost:8080/login', {
-                    method: 'POST',
-                    body: JSON.stringify({email: credentials.email, password: credentials.password}),
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    }
-                })
+                const res = await api('POST', 'login', undefined, JSON.stringify({email: credentials.email, password: credentials.password}))
 
                 if (res.status == 200) {
                     const token = res.headers.get('Authorization')
-                    const userRes = await fetch('http://localhost:8080/me', {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': '*',
-                            'Authorization': token
-                        }
-                    }).then(res => res.json())
+                    const userRes = await api('GET', 'me', token).then(res => res.json())
                     const user: User = { id: userRes.id, name: userRes.name, email: userRes.email, accessToken: token }
                     return user
                 }
@@ -62,6 +46,7 @@ export default NextAuth({providers,
         },
         async session({ session, token }) {
             session.accessToken = token.accessToken
+            session.user.id = token.id
             return session
         }
     },
@@ -70,6 +55,7 @@ export default NextAuth({providers,
     },
     secret: "mySecret",
     jwt: {
+        maxAge: 1 * 60 * 60,
         async encode(params: {
             token: JWT
             secret: string
@@ -83,6 +69,7 @@ export default NextAuth({providers,
                 sub: params.token.sub
             }
             const encodedToken = jwt.sign(tokenContents, "mySecret")
+            // console.log("TOKEN CONTENTS" + JSON.stringify(tokenContents))
             return encodedToken
           },
         async decode(params: {
@@ -90,6 +77,7 @@ export default NextAuth({providers,
             secret: string
           }): Promise<JWT | null> {
             const decodedToken = jwt.verify(params.token, "mySecret")
+            // console.log("DECODED " + JSON.stringify(decodedToken))
             return decodedToken
         }
     }

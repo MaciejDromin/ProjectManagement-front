@@ -1,22 +1,22 @@
-import { useState, FormEvent } from "react"
+import { useState, useEffect, FormEvent } from "react"
 import type { GroupCreation } from "../lib/types"
 
-const GroupAdd = () => {
+interface Props {
+    updateRequests: (endpoint: string, body: any) => void
+}
+
+const GroupAdd = (props: Props) => {
 
     const [groupName, setGroupName] = useState('')
-
-    const saveProject = async () => {
+    const { updateRequests } = props
+    useEffect(() => {
+        saveGroup()
+    }, [groupName])
+    const saveGroup = () => {
         const body:GroupCreation = {
             name: groupName
         }
-        //TODO: integrate with backend
-        const response = await fetch('/api/project', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        updateRequests('/groups/users', body)
     }
 
     //TODO: Do validation on inputs

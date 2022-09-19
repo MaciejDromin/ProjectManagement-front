@@ -10,7 +10,8 @@ const Login = () => {
     const handleLogin = () => {
         signIn('credentials', {
             email,
-            password
+            password,
+            callbackUrl: window.location.origin +"/"
         })
     }
 

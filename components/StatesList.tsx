@@ -1,15 +1,7 @@
 import Collapsable from "./Collapsable"
 import Heading from "./Heading"
-
-type Task = {
-    name: string
-}
-
-type State = {
-    name: string,
-    completed: string,
-    tasks: Task[]
-}
+import TasksList from "./TasksList"
+import type { State } from "../lib/types"
 
 type Props = {
     statesList: State[]
@@ -27,13 +19,13 @@ const StatesList = ({ statesList }: Props) => {
                                 <div className="btn normal-case text-xl">{state.name}</div>
                             </div>
                             <div className="flex-none gap-2">
-                                <div className="btn normal-case text-xl">{state.completed}</div>
+                                <div className="btn normal-case text-xl">{state.completed ? "Completed" : "In Progress"}</div>
                             </div>
                         </div>
                         {state.tasks.map(task => {
                             return (
                                 <div className="my-4">
-                                    <Collapsable contentName="Tasks" component={<Heading title="Test"/>}/>
+                                    <Collapsable contentName="Tasks" component={<TasksList taskList={state.tasks}/>}/>
                                 </div>
                             )
                         })}

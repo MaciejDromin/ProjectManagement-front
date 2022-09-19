@@ -1,18 +1,21 @@
+import React from "react"
+
 interface ParentCompProps {
+    popUpFor: string,
     buttonName: string,
     childComp?: React.ReactNode
 }
 
 const Popup: React.FC<ParentCompProps> = (props) => {
-    const { buttonName, childComp } = props;
+    const { popUpFor, buttonName, childComp } = props
     return (
-        <div>
-            <label htmlFor="my-modal-4" className="btn modal-button">{buttonName}</label>
-            <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-            <label htmlFor="my-modal-4" className="modal cursor-pointer">
-            <label className="modal-box relative" htmlFor="">
-                {childComp}
-            </label>
+        <div key={popUpFor}>
+            <label htmlFor={"my-modal-"+popUpFor} className="btn modal-button">{buttonName}</label>
+            <input type="checkbox" id={"my-modal-"+popUpFor} className="modal-toggle" />
+            <label htmlFor={"my-modal-"+popUpFor} className="modal cursor-pointer">
+                <label className="modal-box relative" htmlFor="">
+                    {childComp}
+                </label>
             </label>
         </div>
     )
