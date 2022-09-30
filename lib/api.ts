@@ -1,4 +1,4 @@
-const url = 'http://localhost:8080/'
+const url = process.env.BACKEND_URL
 
 const api = async (method: string, endpoint?: string, accessToken?: string, body?: string) => {
     return await fetch(url + endpoint, {

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: proman-front-service
+  labels:
+    app: proman-front
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 31000
+  selector:
+    app: proman-front

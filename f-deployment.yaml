@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proman-front
+  labels:
+    app: proman-front
+spec:
+  selector:
+    matchLabels:
+      app: proman-front
+  template:
+    metadata:
+      labels:
+        app: proman-front
+    spec:
+      containers:
+        - name: proman-front
+          image: mlisowski/proman-front:local
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: BACKEND_URL
+              value: http://proman-service/

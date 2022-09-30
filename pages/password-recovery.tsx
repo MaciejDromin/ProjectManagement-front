@@ -16,7 +16,7 @@ const PasswordRec = () => {
                             <input type="text" placeholder="Email" className={'input input-bordered w-full max-w-xs my-2 mx-auto ' + (recovery.hadSearched && !recovery.accExists ? 'input-error' : '')} />
                             {recovery.hadSearched && !recovery.accExists &&
                                 <label className="label">
-                                    <span className="label-text-alt text-error">Account with such email doesn't exists!</span>
+                                    <span className="label-text-alt text-error">Account with such email doesn&apos;t exists!</span>
                                 </label>
                             }
                         </div>

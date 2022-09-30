@@ -69,7 +69,6 @@ export default NextAuth({providers,
                 sub: params.token.sub
             }
             const encodedToken = jwt.sign(tokenContents, "mySecret")
-            // console.log("TOKEN CONTENTS" + JSON.stringify(tokenContents))
             return encodedToken
           },
         async decode(params: {
@@ -77,7 +76,6 @@ export default NextAuth({providers,
             secret: string
           }): Promise<JWT | null> {
             const decodedToken = jwt.verify(params.token, "mySecret")
-            // console.log("DECODED " + JSON.stringify(decodedToken))
             return decodedToken
         }
     }

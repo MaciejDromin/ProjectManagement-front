@@ -20,12 +20,12 @@ const ProjectShort = ({id, name, status, description}: Props) => {
             }
         })
         if (response.status == 200) {
-            router.reload(window.location.pathname)
+            router.reload()
         }
     }
 
     return (
-        <div id={id} tabIndex="0" className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box mb-2">
+        <div id={id} tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box mb-2">
             <div className="collapse-title text-xl font-medium">
                 <Link href={"/projects/"+id}>{name}</Link> &nbsp;
                 {status} &nbsp;
