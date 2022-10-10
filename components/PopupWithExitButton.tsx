@@ -8,7 +8,7 @@ const PopupWithExitButton: React.FC<ParentCompProps> = (props) => {
     const { updateIsOpened, buttonName, childComp } = props;
     return (
         <div>
-            <label onClick={updateIsOpened} htmlFor="my-modal-3" className="btn modal-button">{buttonName}</label>
+            <label onClick={updateIsOpened} htmlFor="my-modal-3" className="btn modal-button rounded-md bg-slate-700">{buttonName}</label>
 
             <input type="checkbox" id="my-modal-3" className="modal-toggle" />
             <div className="modal">

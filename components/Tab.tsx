@@ -27,7 +27,7 @@ const Tab: React.FC<ParentCompProps> = (props) => {
         let response
         let createdId: number
         let endpoint: string
-        for (var i = 0;i<=selectedTab.id;i++) {
+        for (let i = 0;i<=selectedTab.id;i++) {
             if (i>0) {
                 endpoint = requestsToSend.endpoint[i] + createdId
             } else {

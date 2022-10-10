@@ -19,7 +19,8 @@ interface Project {
 interface Group {
   id: number,
   name: string,
-  projects: Project[]
+  projects: Project[],
+  owned: boolean
 }
 
 export default function Home() {
@@ -33,8 +34,11 @@ export default function Home() {
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
+    if (status !== "authenticated") {
+      return
+    }
     setLoading(true)
-    fetch('/api/groups/users', {
+    fetch('/api/groups/share', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -42,13 +46,14 @@ export default function Home() {
       }
     }).then((res) => res.json())
       .then((data) => {
+        console.log(data)
         setGroups(data)
         setLoading(false)
       })
-  }, [])
+  }, [status])
 
   return (
-    <div data-theme="corporate">
+    <div>
       {
         status === "authenticated" ? (
           (
@@ -60,10 +65,10 @@ export default function Home() {
                   { name: "Tasks", component: <TaskAdd /> }
                 ]
               } />} />
-              <div>
+              <div className="mt-8">
                 {!isLoading && groups !== null && <div>{groups.map(group => {
                   return (
-                    <Group key={group.id} id={group.id} name={group.name} projects={group.projects} />
+                    <Group key={group.id} id={group.id} name={group.name} projects={group.projects} owned={group.owned} />
                   )
                 })}</div>}
               </div>

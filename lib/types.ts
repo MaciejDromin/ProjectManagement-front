@@ -8,6 +8,12 @@ export type GroupCreation = {
     name:string
 }
 
+export type ShareGroupType = {
+    groupId: number,
+    userSharing: number,
+    userSharedToEmail: string
+}
+
 export type PredefinedGroupStateCreation = {
     name:string
 }

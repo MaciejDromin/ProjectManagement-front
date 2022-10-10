@@ -9,6 +9,9 @@ const nextConfig = {
   },
   experimental: {
     outputStandalone: true
+  },
+  daisyui: {
+    themes: ["dark", "corporate"],
   }
 }
 
