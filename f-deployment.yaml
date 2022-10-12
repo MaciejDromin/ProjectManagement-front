@@ -23,4 +23,6 @@ spec:
               protocol: TCP
           env:
             - name: BACKEND_URL
-              value: http://proman-service/
+              value: http://proman-service:8080/
+            - name: NEXTAUTH_URL
+              value: http://localhost:31000/
