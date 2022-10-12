@@ -21,7 +21,6 @@ const providers = [
         authorize: async (credentials: any, req) => {
             try {
                 const res = await api('POST', 'login', undefined, JSON.stringify({email: credentials.email, password: credentials.password}))
-
                 if (res.status == 200) {
                     const token = res.headers.get('Authorization')
                     const userRes = await api('GET', 'me', token).then(res => res.json())
@@ -36,7 +35,7 @@ const providers = [
     })
 ]
 
-export default NextAuth({providers,
+export default NextAuth({site: process.env.NEXTAUTH_URL, providers,
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
